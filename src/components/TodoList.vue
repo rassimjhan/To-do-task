@@ -61,35 +61,14 @@ export default {
       newTodo: "",
       idForTodo: 3,
       beforeEditCache: "",
-      filter: "all",
-      todos: [
-        {
-          id: 1,
-          title: "Записаться на стрижку",
-          completed: false,
-          editing: false
-        },
-        {
-          id: 2,
-          title: "Купить щетку",
-          completed: false,
-          editing: false
-        }
-      ]
     };
   },
   computed: {
-    remaining() {
-      return this.$store.getters.remaining
-    },
     anyRemaining() {
        return this.$store.getters.remaining
     },
     todosFiltered() {
       return this.$store.getters.todosFiltered
-    },
-    showClearCompletedButton() {
-      return this.$store.getters.showClearCompletedButton
     }
   },
   methods: {
@@ -98,7 +77,7 @@ export default {
         return;
       }
 
-      this.$store.commit('addTodo', {
+      this.$store.dispatch('addTodo', {
         id: this.idForTodo,
         title: this.newTodo,
       })

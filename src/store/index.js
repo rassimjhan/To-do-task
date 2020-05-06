@@ -21,6 +21,7 @@ export default new Vuex.Store({
       }
     ]
   },
+
   getters: {
     remaining(state) {
       return state.todos.filter(todo => !todo.completed).length;
@@ -43,6 +44,7 @@ export default new Vuex.Store({
       return state.todos.filter(todo => todo.completed).length > 0;
     }
   },
+
   mutations: {
     addTodo(state, todo) {
       state.todos.push({
@@ -65,8 +67,8 @@ export default new Vuex.Store({
       const index = state.todos.findIndex((item) => item.id == id)
       state.todos.splice(index, 1);
     },
-    checkAll(state) {
-      state.todos.forEach((todo) => todo.completed = event.target.checked);
+    checkAll(state, checked) {
+      state.todos.forEach((todo) => todo.completed = checked);
     },
     updateFilter(state, filter) {
       state.filter = filter
@@ -75,6 +77,25 @@ export default new Vuex.Store({
       state.todos = state.todos.filter(todo => !todo.completed);
     }
   },
-  actions: {},
-  modules: {}
+
+  actions: {
+    addTodo(context, todo) {
+      context.commit('addTodo', todo);
+    },
+    updateTodo(context, todo) {
+      context.commit('updateTodo', todo);
+    },
+    deleteTodo(context, id) {
+      context.commit('deleteTodo', id);
+    },
+    checkAll(context, checked) {
+      context.commit('checkAll', checked);
+    },
+    updateFilter(context, filter) {
+      context.commit('updateFilter', filter);
+    },
+    clearCompleted(context) {
+      context.commit('clearCompleted');
+    }
+  }
 });
