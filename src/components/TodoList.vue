@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top:80px">
     <h1 style="text-align: center;">To-do List</h1>
     <input
       type="text"

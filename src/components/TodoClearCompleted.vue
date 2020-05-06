@@ -1,5 +1,5 @@
 <template>
-   <button v-if="showClearCompletedButton" @click="clearCompleted">Удалить выполненные</button>
+   <button class="btn btn-danger btn-sm" v-if="showClearCompletedButton" @click="clearCompleted">Удалить выполненные</button>
 </template>
 
 <script>

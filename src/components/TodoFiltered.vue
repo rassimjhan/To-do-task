@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button :class="{ active: filter == 'all' }" @click="changeFilter('all')">Все</button>
-        <button :class="{ active: filter == 'active' }" @click="changeFilter('active')">Активные</button>
-        <button :class="{ active: filter == 'completed' }" @click="changeFilter('completed')">Выполненные</button>
+        <button class="btn btn-success mr-2 btn-sm" :class="{ active: filter == 'all' }" @click="changeFilter('all')">Все</button>
+        <button class="btn btn-primary mr-2 btn-sm" :class="{ active: filter == 'active' }" @click="changeFilter('active')">Активные</button>
+        <button class="btn btn-primary btn-sm" :class="{ active: filter == 'completed' }" @click="changeFilter('completed')">Выполненные</button>
       </div>
 </template>
 
