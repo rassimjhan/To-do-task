@@ -9,15 +9,14 @@
 <script>
 export default {
   name: "todo-filtered",
-  data() {
-    return {
-      'filter': 'all',
+  computer: {
+    filter() {
+      return this.$store.getters.filter
     }
   },
    methods: {
    changeFilter(filter) {
-      this.filter = filter
-      this.$eventBus.$emit('filterChanged', filter)
+     this.$store.commit('updateFilter', filter)
     }
   }
 };

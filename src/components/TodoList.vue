@@ -23,15 +23,15 @@
     </transition-group>
 
     <div class="extra-container">
-      <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
-      <todo-items-remaining :remaining="remaining"></todo-items-remaining>
+      <todo-check-all></todo-check-all>
+      <todo-items-remaining></todo-items-remaining>
     </div>
 
     <div class="extra-container">
       <todo-filtered></todo-filtered>
       <div>
         <transition name="fade">
-         <todo-clear-completed :showClearCompletedButton="showClearCompletedButton"></todo-clear-completed>
+         <todo-clear-completed></todo-clear-completed>
         </transition>
       </div>
     </div>
@@ -78,40 +78,18 @@ export default {
       ]
     };
   },
-  created() {
-   this.$eventBus.$on('removedTodo', (index) => this.removeTodo(index))
-   this.$eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
-   this.$eventBus.$on('checkAllChanged', (checked) => this.checkAllTodos(checked))
-   this.$eventBus.$on('filterChanged', (filter) => this.filter = filter)
-   this.$eventBus.$on('clearCompletedTodos', () => this.clearCompleted())
-  },
-  beforeDestroy() {
-    this.$eventBus.$off('removedTodo')
-    this.$eventBus.$off('finishedEdit')
-    this.$eventBus.$off('checkAllChanged')
-    this.$eventBus.$off('filterChanged')
-    this.$eventBus.$off('clearCompletedTodos')
-  },
   computed: {
     remaining() {
-      return this.todos.filter(todo => !todo.completed).length;
+      return this.$store.getters.remaining
     },
     anyRemaining() {
-      return this.remaining !== 0;
+       return this.$store.getters.remaining
     },
     todosFiltered() {
-      if (this.filter == "all") {
-        return this.todos;
-      } else if (this.filter == "active") {
-        return this.todos.filter(todo => !todo.completed);
-      } else if (this.filter == "completed") {
-        return this.todos.filter(todo => todo.completed);
-      }
-
-      return this.todos;
+      return this.$store.getters.todosFiltered
     },
     showClearCompletedButton() {
-      return this.todos.filter(todo => todo.completed).length > 0;
+      return this.$store.getters.showClearCompletedButton
     }
   },
   methods: {
@@ -119,27 +97,15 @@ export default {
       if (this.newTodo.trim().length == 0) {
         return;
       }
-      this.todos.push({
+
+      this.$store.commit('addTodo', {
         id: this.idForTodo,
         title: this.newTodo,
-        completed: false
-      });
+      })
 
       this.newTodo = "";
       this.idForTodo++;
     },
-    removeTodo(index) {
-      this.todos.splice(index, 1);
-    },
-    checkAllTodos() {
-      this.todos.forEach((todo) => todo.completed = event.target.checked);
-    },
-    clearCompleted() {
-      this.todos = this.todos.filter(todo => !todo.completed);
-    },
-    finishedEdit(data) {
-      this.todos.splice(data.index, 1, data.todo);
-    }
   }
 };
 </script>
